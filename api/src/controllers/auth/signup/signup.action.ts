@@ -1,4 +1,4 @@
-import { Request, Response } from '@@types/express.js';
+import { Request, Response, NextFunction } from '@@types/express.js';
 import bcrypt from 'bcrypt';
 
 import { z } from 'zod';
@@ -9,12 +9,38 @@ import { entities, errors } from '@@utils/index.js';
 
 export type Body = z.infer<typeof userSchemas.create>;
 
-async function signup(req: Request<Body>, res: Response) {
+async function signup(req: Request<Body>, res: Response, next: NextFunction) {
 
     const validatedBody = userSchemas.create.safeParse(req.body);
 
     if(!validatedBody.success) {
         return errors.sendInvalidBody(res, validatedBody.error);
+    }
+
+    const [userFind, findErr] = await entities.findOne<User>(User, {
+        where: {
+            email: req.body.email.toLowerCase()
+        }
+    });
+
+    if(findErr) {
+        return errors.sendResponse({ 
+            res, 
+            next, 
+            err: findErr, 
+            status: 500, 
+            message: "Error checking for existing user"
+        });
+    }
+
+    if(userFind && userFind.email === req.body.email) {
+        return errors.sendResponse({
+            res, 
+            next, 
+            err: findErr, 
+            status: 400, 
+            message: "User already exists with that email"
+        });
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
