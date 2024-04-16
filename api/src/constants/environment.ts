@@ -3,6 +3,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 /**
+ * Environment variable for database type
+ */
+export const DB_TYPE = process.env.DB_TYPE as string;
+
+/**
  * Environment variable for database host
  */
 export const DB_HOST = process.env.DB_HOST as string;
