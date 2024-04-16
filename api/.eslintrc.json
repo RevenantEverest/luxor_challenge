@@ -1,0 +1,18 @@
+{
+    "$schema": "https://json.schemastore.org/eslintrc",
+    "root": true,
+    "env": { "es6": true },
+    "extends": [
+        "eslint:recommended",
+        "plugin:drizzle/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "drizzle"
+    ],
+    "rules": {
+        "no-extra-semi": "off"
+    }
+}
