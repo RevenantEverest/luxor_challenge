@@ -64,3 +64,12 @@ TESTING_DB_PORT=5432
 - Jest
 - Supertest
 - PostgreSQL
+
+## Challenge Questions
+
+1. How would you monitor the application to ensure it is running smoothly?
+    * I would use technologies like Sentry, alongside user analytics platforms like PostHog
+2. How would you address scalability and performance?
+    * I haven't come across any major performance or scalability problems in my projects thus far, but technologies like Kubernetes can help with scalability.
+3. Trade-offs you had to choose when doing this challenge (the things you would do different with more time and resources)
+    * With more time, I would love to implement tools like redux and redux thunk. I'd also want to ensure code quality via testing using either Jest or Cypress.
