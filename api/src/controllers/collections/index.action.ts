@@ -27,30 +27,13 @@ async function index(req: Request, res: Response<"pagination">) {
         }
     };
 
-    const bidSelect: FindOptionsSelect<Collection> = {
-        bids: {
-            id: true,
-            price: true,
-            status: true,
-            user: {
-                id: true,
-                email: true
-            },
-            created_at: true
-        }
-    };
-
     const [collections, err] = await entities.indexAndCount<Collection>(Collection, indexOptions, {
         select: {
             ...baseSelect,
-            ...ownerSelect,
-            ...bidSelect
+            ...ownerSelect
         },
         relations: {
-            owner: true,
-            bids: {
-                user: true
-            }
+            owner: true
         }
     });
 
