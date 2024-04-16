@@ -15,7 +15,7 @@ import Bid from './Bid.js';
 class User extends BaseEntity {
 
     constructor(
-        id: number,
+        id: string,
         email: string,
         password: string,
         created_at: Date,
@@ -37,7 +37,7 @@ class User extends BaseEntity {
     };
 
     @PrimaryGeneratedColumn("uuid")
-    id: number;
+    id: string;
 
     @Column({ type: "varchar", length: 255 })
     email: string;
