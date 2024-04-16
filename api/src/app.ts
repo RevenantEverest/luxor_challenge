@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 
-import { authRoutes } from '@@routes/index.js';
+import { authRoutes, collectionRoutes } from '@@routes/index.js';
 
 function initializeApp(): Application {
     const app = express();
@@ -15,6 +15,7 @@ function initializeApp(): Application {
     app.set("trust proxy", "loopback");
 
     app.use("/auth", authRoutes);
+    app.use("/collections", collectionRoutes)
 
     return app;
 };
