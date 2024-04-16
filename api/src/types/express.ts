@@ -18,5 +18,5 @@ export interface Locals<T> {
 };
 
 export type Request<T = unknown, D = unknown> = ExpressRequest<D, unknown, T>;
-export type Response<T extends keyof Locals<D> = "params", D = unknown> = ExpressResponse<unknown, Pick<Locals<D>, T>>
+export type Response<T extends keyof Locals<D> = "params", D = unknown> = ExpressResponse<unknown, Pick<Locals<D>, T | "params">>
 export type NextFunction = ExpressNextFunction;
