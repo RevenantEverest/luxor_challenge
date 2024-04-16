@@ -1,5 +1,6 @@
 import {
     Entity,
+    Unique,
     BaseEntity,
     PrimaryGeneratedColumn,
     Column,
@@ -12,6 +13,7 @@ import Collection from './Collection.js';
 import Bid from './Bid.js';
 
 @Entity('users')
+@Unique(['email'])
 class User extends BaseEntity {
 
     constructor(
