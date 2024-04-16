@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json.schemastore.org/swcrc",
+    "jsc": {
+        "baseUrl": "./src",
+        "paths": {
+            "@@root/*": ["./*"],
+            "@@constants/*": ["./constants/*"],
+            "@@controllers/*": ["./controllers/*"],
+            "@@db/*": ["./db/*"],
+            "@@entities/*": ["./entities/*"],
+            "@@middleware/*": ["./middleware/*"],
+            "@@routes/*": ["./routes/*"],
+            "@@schemas/*": ["./schemas/*"],
+            "@@services/*": ["./services/*"],
+            "@@types/*": ["./types/*"],
+            "@@utils/*": ["./utils/*"],
+            "@@tests/support/*": ["./__tests__/support/*"],
+            "@@tests/integration/*": ["./__tests__/integration/*"]
+        },
+        "parser": {
+            "syntax": "typescript",
+            "decorators": true
+        },
+        "target": "es2022"
+    }
+}
