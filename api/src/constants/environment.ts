@@ -61,3 +61,8 @@ export const IS_PROD = process.env.ENVIRONMENT === "PROD";
  * Check if the current environment is set to TEST
  */
 export const IS_TEST = process.env.ENVIRONMENT === "TEST";
+
+/**
+ * Environment variable for issuing JWT tokens
+ */
+export const TOKEN_SECRET = process.env.TOKEN_SECRET as string;
