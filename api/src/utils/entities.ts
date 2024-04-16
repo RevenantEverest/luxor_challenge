@@ -176,13 +176,14 @@ export async function index<T extends BaseEntity>(entity: Target<T>, options: In
     return [res, undefined];
 };
 
-export async function indexAndCount<T extends BaseEntity>(entity: Target<T>, options: IndexOptions): PromiseTuple<[T[], number]> {
+export async function indexAndCount<T extends BaseEntity>(entity: Target<T>, indexOptions: IndexOptions, findOptions?: FindManyOptions<T>): PromiseTuple<[T[], number]> {
 
     const repository = AppDataSource.getRepository(entity);
 
     const promise = repository.findAndCount({
-        skip: options.offset ?? 0,
-        take: options.limit ?? DEFAULTS.PAGINATION.LIMIT
+        skip: indexOptions.offset ?? 0,
+        take: indexOptions.limit ?? DEFAULTS.PAGINATION.LIMIT,
+        ...(findOptions)
     });
     const [res, err] = await promises.handle<[T[], number]>(promise);
 
