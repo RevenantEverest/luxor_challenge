@@ -12,6 +12,8 @@ API_PORT=3001
 
 DOCKER_REGISTRY=localhost
 
+TOKEN_SECRET=[desired string]
+
 DB_TYPE=postgres
 DB_HOST=db
 DB_USERNAME=[desired username]
