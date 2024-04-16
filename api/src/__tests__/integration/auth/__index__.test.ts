@@ -14,7 +14,7 @@ const baseEndpoint = "/auth";
 
 const extraParams: AuthExtraParams = {};
 
-describe("Voice Actors Route", () => {
+describe("Auth Routes", () => {
     beforeAll(async () => {
         await connectToTestingDatabase();
     }, DATABASE.DB_TIMEOUT);
