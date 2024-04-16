@@ -1,8 +1,12 @@
+import { Layout } from '@@components/Common';
+
+
+
 function Home() {
     return (
-        <div>
+        <Layout>
             <h1>Hello World</h1>
-        </div>  
+        </Layout>  
     );
 };
 
