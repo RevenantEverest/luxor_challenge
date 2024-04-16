@@ -8,8 +8,7 @@ type CollectionProperties = keyof Pick<Collection, (
     "name" |
     "description" |
     "stocks" |
-    "price" |
-    "owner"
+    "price"
 )>;
 
 type CreateSchema = Record<CollectionProperties, (
@@ -23,8 +22,7 @@ const create = z.object<CreateSchema>({
     name: z.string(errorMessages("name", "string")),
     description: z.string(errorMessages("description", "string")),
     stocks: z.coerce.number(errorMessages("stocks", "number")),
-    price: z.coerce.number(errorMessages("price", "number")),
-    owner: z.string(errorMessages("owner", "string"))
+    price: z.coerce.number(errorMessages("price", "number"))
 });
 
 export default create;

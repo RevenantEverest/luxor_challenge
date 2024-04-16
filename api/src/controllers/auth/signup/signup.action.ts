@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from '@@types/express.js';
+import { Request, Response } from '@@types/express.js';
 import bcrypt from 'bcrypt';
 
 import { z } from 'zod';
@@ -9,7 +9,7 @@ import { entities, errors } from '@@utils/index.js';
 
 export type Body = z.infer<typeof userSchemas.create>;
 
-async function signup(req: Request<Body>, res: Response, next: NextFunction) {
+async function signup(req: Request<Body>, res: Response) {
 
     const validatedBody = userSchemas.create.safeParse(req.body);
 
@@ -26,7 +26,6 @@ async function signup(req: Request<Body>, res: Response, next: NextFunction) {
     if(findErr) {
         return errors.sendResponse({ 
             res, 
-            next, 
             err: findErr, 
             status: 500, 
             message: "Error checking for existing user"
@@ -36,7 +35,6 @@ async function signup(req: Request<Body>, res: Response, next: NextFunction) {
     if(userFind && userFind.email === req.body.email) {
         return errors.sendResponse({
             res, 
-            next, 
             err: findErr, 
             status: 400, 
             message: "User already exists with that email"

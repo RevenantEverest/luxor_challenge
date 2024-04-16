@@ -5,7 +5,6 @@ import Collection from '@@entities/Collection.js';
 import { validation } from '@@utils/index.js';
 
 type CollectionProperties = keyof Pick<Collection, (
-    "id" |
     "name" |
     "description" |
     "stocks" |
@@ -20,7 +19,6 @@ type UpdateSchema = Record<CollectionProperties, (
 const errorMessages = validation.basicErrorMessages<CollectionProperties>;
 
 const update = z.object<UpdateSchema>({
-    id: z.coerce.number(errorMessages("id", "number")),
     name: z.string(errorMessages("name", "string")),
     description: z.string(errorMessages("description", "string")),
     stocks: z.coerce.number(errorMessages("stocks", "number")),

@@ -10,7 +10,7 @@ async function verifyToken(req: Request, res: Response<"auth">, next: NextFuncti
     const bearerHeader = req.headers['authorization'];
 
     if(typeof bearerHeader === 'undefined') {
-        return res.status(403).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized" });
     }
 
     const bearer: Array<string> = bearerHeader.split(" ");
@@ -22,14 +22,14 @@ async function verifyToken(req: Request, res: Response<"auth">, next: NextFuncti
                 case "TokenExpiredError: jwt expired":
                     return errors.sendResponse({ 
                         res, 
-                        status: 403, 
+                        status: 401, 
                         message: "Token Expired"
                     });
                 default:
                     return errors.sendResponse({ 
                         res, 
                         err, 
-                        status: 403, 
+                        status: 401, 
                         message: "Invalid Token" 
                     });
             };
