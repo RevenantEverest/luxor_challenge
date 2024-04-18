@@ -26,8 +26,8 @@ function TextInput({ id="", className="", type, label, icon, iconRight, iconClas
     `;
 
     const focusInputClassName = `
-        focus:border-secondary 
-        focus:ring-secondary
+        focus:border-primary 
+        focus:ring-primary
     `;
 
     const renderIcon = (IconComponent: IconType) => {
