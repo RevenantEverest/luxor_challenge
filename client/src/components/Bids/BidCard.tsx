@@ -36,13 +36,13 @@ function BidCard({ className, collection, bid, fetchBids }: BidCardProps) {
 
         if(err || !res) {
             toast((t) => (
-                <ToastError toast={t} message="Unable to create Bid" />
+                <ToastError toast={t} message="Unable to accept Bid" />
             ));
             return console.log(err?.message.toString());
         }
 
         toast((t) => (
-            <ToastSuccess toast={t} message="Bid created successfully!" />
+            <ToastSuccess toast={t} message="Bid accepted!" />
         ));
 
         fetchBids(collectionId);
