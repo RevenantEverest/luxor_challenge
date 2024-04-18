@@ -8,6 +8,7 @@
     "start": "bun run build && NODE_ENV=production node dist/server.js",
     "test": "NODE_ENV=test jest --setupFiles dotenv/config --runInBand",
     "lint": "eslint . --ext ts --report-unused-disable-directives --max-warnings 0",
+    "seed": "bun run build && node -e \"import('./dist/db/seeding.js').then( loadedModule => loadedModule.default() )\"",
     "reset:npm": "rm -rf node_modules && bun install"
   },
   "type": "module",
@@ -15,6 +16,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "bcrypt": "^5.1.1",
     "chalk": "^5.3.0",
     "cors": "^2.8.5",

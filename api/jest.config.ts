@@ -18,6 +18,7 @@ const config: Config.InitialOptions = {
         "^@@controllers/(.*)$": "<rootDir>/src/controllers/$1",
         "^@@db/(.*)$": "<rootDir>/src/db/$1",
         "^@@entities/(.*)$": "<rootDir>/src/entities/$1",
+        "^@@factories/(.*)$": "<rootDir>/src/factories/$1",
         "^@@middleware/(.*)$": "<rootDir>/src/middleware/$1",
         "^@@routes/(.*)$": "<rootDir>/src/routes/$1",
         "^@@schemas/(.*)$": "<rootDir>/src/schemas/$1",
