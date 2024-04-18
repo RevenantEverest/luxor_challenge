@@ -1,12 +1,12 @@
 import type { RootState } from '@@store/index';
-import type { CreateCollectionFormHelpers, CreateCollectionFormValues } from '@@components/Forms/CreateCollectionForm';
+import type { CollectionFormHelpers, CollectionFormValues } from '@@components/Forms/CollectionForm';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useAppSelector } from '@@hooks';
 
-import { Card, Layout, Button, Modal, ToastSuccess, ToastError } from '@@components/Common';
-import CreateCollectionForm from '@@components/Forms/CreateCollectionForm';
+import { Button, Modal, ToastSuccess, ToastError } from '@@components/Common';
+import CollectionForm from '@@components/Forms/CollectionForm';
 
 import * as api from '@@api';
 
@@ -20,7 +20,7 @@ function CreateCollection({ className="", fetchCollections }: CreateCollectionPr
     const auth = useAppSelector((state: RootState) => state.auth);
     const [visible, setVisible] = useState(false);
 
-    const onSubmit = async (values: CreateCollectionFormValues, helpers: CreateCollectionFormHelpers) => {
+    const onSubmit = async (values: CollectionFormValues, helpers: CollectionFormHelpers) => {
         if(!auth.accessToken) {
             return;
         }
@@ -51,7 +51,7 @@ function CreateCollection({ className="", fetchCollections }: CreateCollectionPr
             </Button>
             <Modal motionKey={`create-collection-modal`} visible={visible} setVisible={setVisible}>
                 <div className="flex flex-col gap-5 justify-center">
-                    <CreateCollectionForm onSubmit={onSubmit} />
+                    <CollectionForm formType="Create" onSubmit={onSubmit} />
                 </div>
             </Modal>
         </React.Fragment>
