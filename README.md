@@ -47,6 +47,18 @@ TESTING_DB_PORT=5432
 - `cd` into `/api` and run `bun install`
 - Run the `start_dev.sh` script in the `/scripts/` directory
 
+#### Seed the Database
+
+- In a separate terminal window, navigate back to the `./scripts` directory
+- Run the script `./api_shell.sh`
+- Inside the api container shell, run the command `bun seed`
+
+#### Run the Next.js Client
+
+- `cd` into the `./client` directory
+- Run `bun install`
+- Run `bun dev`
+
 ## Testing
 
 - While the api docker container is running
@@ -64,6 +76,8 @@ TESTING_DB_PORT=5432
 - Jest
 - Supertest
 - PostgreSQL
+- Redux
+- Next.js
 
 ## Challenge Questions
 
