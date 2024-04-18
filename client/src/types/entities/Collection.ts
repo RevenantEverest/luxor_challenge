@@ -10,3 +10,10 @@ export interface Collection {
         email: string
     }
 };
+
+export interface CollectionCreate {
+    name: string,
+    description: string,
+    stocks: string,
+    price: string
+};
