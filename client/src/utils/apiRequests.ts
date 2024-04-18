@@ -12,18 +12,16 @@ import type {
 } from '@@types/api';
 
 import * as promises from './promises';
-import * as authTokenUtils from './authToken';
 
 export type ApiResponse<T> = AxiosApiResponse<T>;
 
 export function generateRequest<T>(method: RequestMethods, endpoint: string, data?: T, authToken?: string) {
-    const token = authTokenUtils.getToken();
     const authHeaders = {
-        Authorization: `Bearer ${authToken ?? token.token}`
+        Authorization: `Bearer ${authToken}`
     };
 
     const headers = {
-        ...((token || authToken) && authHeaders),
+        ...((authToken) && authHeaders),
         ...((data && data instanceof FormData) && { "Content-Type": "multipart/form-data" })
     };
 
@@ -62,10 +60,6 @@ export async function request<T, D = void>({ method, endpoint, data, authToken }
     const [res, err] = await promises.handleApi<ApiResponse<T>>(request);
 
     if(err) {
-        /* Attempt to refresh token */
-        // if(err.status === 401) {
-        //     return;
-        // }
         return [undefined, err];
     }
 
