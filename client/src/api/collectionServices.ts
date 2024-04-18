@@ -1,6 +1,6 @@
-import type { ApiPaginatedResponse, ApiPaginationParams } from '@@types/api';
+import type { ApiPaginatedResponse, ApiResponse, ApiPaginationParams } from '@@types/api';
 import type { HandleAxiosReturn } from '@@types/promises';
-import type { Collection } from '@@types/entities/Collection';
+import type { Collection, CollectionCreate } from '@@types/entities/Collection';
 
 import { ENV } from '@@constants';
 import { apiRequests } from '@@utils';
@@ -14,5 +14,15 @@ export function index(params: ApiPaginationParams): Promise<PaginatedResponse> {
     return apiRequests.paginatedRequest<Collection>({
         endpoint,
         method: "get"
+    });
+};
+
+export function create(data: CollectionCreate, authToken: string): Promise<HandleAxiosReturn<ApiResponse<Collection>>> {
+    const endpoint = baseEndpoint;
+    return apiRequests.request<Collection, CollectionCreate>({
+        endpoint,
+        method: "post",
+        authToken,
+        data
     });
 };
