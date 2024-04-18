@@ -30,6 +30,10 @@ export interface ApiErrorResponse {
     message: string
 };
 
+export interface ApiResponse<T> {
+    results: T
+};
+
 export type AxiosApiResponse<T> = AxiosResponse<T>;
 export type AxiosApiError = AxiosError<ApiErrorResponse>;
 export type AxiosPaginatedApiResponse<T> = AxiosResponse<ApiPaginatedResponse<T>>;
