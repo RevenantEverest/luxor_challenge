@@ -1,9 +1,9 @@
 import type { Request, Response } from '@@types/express.js';
 import type { IndexOptions } from '@@types/entities.js';
+import type { FindOptionsSelect } from 'typeorm';
 
 import { Collection } from '@@entities/index.js';
 import { entities, errors, pagination } from '@@utils/index.js';
-import { FindOptionsSelect } from 'typeorm';
 
 async function index(req: Request, res: Response<"pagination">) {
     

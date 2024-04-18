@@ -30,6 +30,9 @@ async function getByCollectionId(req: Request, res: Response<"auth" | "params" |
         },
         relations: {
             user: true
+        },
+        order: {
+            id: "ASC"
         }
     });
 

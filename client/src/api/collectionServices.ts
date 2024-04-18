@@ -17,6 +17,14 @@ export function index(params: ApiPaginationParams): Promise<PaginatedResponse> {
     });
 };
 
+export function getOne(collectionId: string): Promise<HandleAxiosReturn<ApiResponse<Collection>>> {
+    const endpoint = `${baseEndpoint}/id/${collectionId}`;
+    return apiRequests.request<Collection>({
+        endpoint,
+        method: "get"
+    });
+};
+
 export function create(data: CollectionCreate, authToken: string): Promise<HandleAxiosReturn<ApiResponse<Collection>>> {
     const endpoint = baseEndpoint;
     return apiRequests.request<Collection, CollectionCreate>({

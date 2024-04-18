@@ -3,12 +3,13 @@
 import type { Collection } from '@@types/entities/Collection';
 import type { RootState } from '@@store/index';
 
-import React, { useState } from 'react';
+import React from 'react';
+import Link from 'next/link';
+import { FaArrowRight } from 'react-icons/fa6';
 import { useAppSelector } from '@@hooks';
 
-import { Card, Button, Modal } from '@@components/Common';
+import { Card, Button } from '@@components/Common';
 import EditCollection from './EditCollection';
-import BidsList from '@@components/Bids/BidsList';
 import CreateBid from '@@components/Bids/CreateBid';
 export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
     collection: Collection,
@@ -18,7 +19,6 @@ export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
 function CollectionCard({ className, collection, fetchCollections }: CollectionCardProps) {
 
     const auth = useAppSelector((state: RootState) => state.auth);
-    const [visible, setVisible] = useState(false);
 
     const rowClass = "w-full text-sm";
 
@@ -40,29 +40,15 @@ function CollectionCard({ className, collection, fetchCollections }: CollectionC
                             auth.user && auth.user.id === collection.owner.id && 
                             <EditCollection className="w-20" collection={collection} fetchCollections={fetchCollections} />
                         }
-                        <Button className="w-20" size="sm" onClick={() => setVisible(true)}>
-                            <p className="font-semibold">View</p>
-                        </Button>
+                        <Link href={`/collections/${collection.id}`}>
+                            <Button className="w-20 flex" size="sm">
+                                <p className="font-semibold pr-2">View</p>
+                                <FaArrowRight />
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </Card>
-            <Modal motionKey={`${collection.id}-modal`} visible={visible} setVisible={setVisible}>
-                <div className="flex flex-col gap-5 items-center justify-center text-center">
-                    <h1 className="text-4xl font-semibold">{collection.name}</h1>
-                    <p className="font-semibold opacity-50">{collection.description}</p>
-                    <div className="flex gap-5">
-                        <p className="">
-                            <span className="uppercase font-semibold mr-1.5">Stocks:</span> 
-                            {collection.stocks.toLocaleString()}
-                        </p>
-                        <p className="">
-                            <span className="uppercase font-semibold mr-1.5">Price:</span> 
-                            ${collection.price.toLocaleString()}
-                        </p>
-                    </div>
-                    <BidsList collection={collection} />
-                </div>
-            </Modal>
         </React.Fragment>
     );
 };

@@ -31,7 +31,8 @@ function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
                         style: {
                             border: "none",
                             background: "transparent",
-                            boxShadow: "none"
+                            boxShadow: "none",
+                            maxWidth: "98%"
                         }
                     }}    
                 />

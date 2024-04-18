@@ -63,7 +63,7 @@ function Home() {
             <h1 className="font-semibold text-4xl">Collections</h1>
             {
                 auth.user &&
-                <CreateCollection className="self-end" fetchCollections={fetchCollections} />
+                <CreateCollection className="self-center md:self-end" fetchCollections={fetchCollections} />
             }
             <Card className="w-full min-h-[70vh]">
                 <CollectionListHeaders />
