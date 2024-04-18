@@ -2,12 +2,13 @@
 
 import type { Collection } from '@@types/entities/Collection';
 import type { RootState } from '@@store/index';
+import type { ApiPaginatedResponse } from '@@types/api';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { useAppSelector } from '@@hooks';
 
-import { Card, Layout, Spinner } from '@@components/Common';
+import { Card, Layout, PaginationNavigator, Spinner } from '@@components/Common';
 
 import CollectionListHeaders from '@@components/Collection/CollectionListHeaders';
 import CollectionCard from '@@components/Collection/CollectionCard';
@@ -20,11 +21,12 @@ function Home() {
     const auth = useAppSelector((state: RootState) => state.auth);
 
     const [loading, setLoading] = useState(true);
-    const [collections, setCollections] = useState<Collection[]>([]);
+    const [page, setPage] = useState(1);
+    const [collections, setCollections] = useState<ApiPaginatedResponse<Collection>>();
 
     const fetchInitialCollections = useCallback(() => {
-        fetchCollections();
-    }, []);
+        fetchCollections(page);
+    }, [page]);
 
     useEffect(() => {
         fetchInitialCollections();
@@ -40,11 +42,13 @@ function Home() {
         }
 
         setLoading(false);
-        setCollections(res.results);
+        setCollections(res);
     };
 
     const renderCollections = () => {
-        return collections.map((collection, index) => {
+        if(!collections) return;
+
+        const Collections = collections.results.map((collection, index) => {
             const key = `${collection.id}-${index}`;
             const bgColor = index % 2 === 0 ? "bg-card" : "bg-card-light";
             return(
@@ -56,6 +60,13 @@ function Home() {
                 />
             );
         });
+
+        return(
+            <React.Fragment>
+                {Collections}
+                <PaginationNavigator count={collections.count} currentPage={page} setPage={setPage} />
+            </React.Fragment>
+        );
     };
 
     return (
@@ -65,7 +76,7 @@ function Home() {
                 auth.user &&
                 <CreateCollection className="self-center md:self-end" fetchCollections={fetchCollections} />
             }
-            <Card className="w-full min-h-[70vh]">
+            <Card className="w-full min-h-[70vh] mb-20">
                 <CollectionListHeaders />
                 {
                     loading ?

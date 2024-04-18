@@ -1,10 +1,11 @@
 import type { Collection } from '@@types/entities/Collection';
+import type { ApiPaginatedResponse } from '@@types/api';
 import type { Bid } from '@@types/entities/Bid';
 import type { RootState } from '@@store/index';
 
-import { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useAppSelector } from '@@hooks';
-import { Card, Spinner } from '@@components/Common';
+import { Card, PaginationNavigator, Spinner } from '@@components/Common';
 import BidCard from './BidCard';
 import CreateBid from './CreateBid';
 
@@ -21,11 +22,12 @@ function BidsList({ className="", collection }: BidsListProps) {
     const auth = useAppSelector((state: RootState) => state.auth);
 
     const [loading, setLoading] = useState(true);
-    const [bids, setBids] = useState<Bid[]>([]);
+    const [page, setPage] = useState(1);
+    const [bids, setBids] = useState<ApiPaginatedResponse<Bid>>();
 
     const fetchInitialBids = useCallback(() => {
-        fetchBids(collection.id.toString());
-    }, [collection.id]);
+        fetchBids(collection.id.toString(), page);
+    }, [collection.id, page]);
 
     useEffect(() => {
         fetchInitialBids();
@@ -41,11 +43,13 @@ function BidsList({ className="", collection }: BidsListProps) {
         }
 
         setLoading(false);
-        setBids(res.results);
+        setBids(res);
     };
 
     const renderBids = () => {
-        return bids.map((bid, index) => {
+        if(!bids) return;
+
+        const Bids = bids.results.map((bid, index) => {
             const key = `${bid.id}-${index}`;
             const bgColor = index % 2 === 0 ? "bg-card" : "bg-card-light";
             return(
@@ -58,6 +62,13 @@ function BidsList({ className="", collection }: BidsListProps) {
                 />
             );
         });
+
+        return(
+            <React.Fragment>
+                {Bids}
+                <PaginationNavigator count={bids.count} currentPage={page} setPage={setPage} />
+            </React.Fragment>
+        );
     };
 
     return(
