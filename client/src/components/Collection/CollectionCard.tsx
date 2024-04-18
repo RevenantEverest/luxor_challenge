@@ -11,6 +11,8 @@ import { useAppSelector } from '@@hooks';
 import { Card, Button } from '@@components/Common';
 import EditCollection from './EditCollection';
 import CreateBid from '@@components/Bids/CreateBid';
+
+import { text } from '@@utils';
 export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
     collection: Collection,
     fetchCollections: () => void
@@ -28,7 +30,7 @@ function CollectionCard({ className, collection, fetchCollections }: CollectionC
                 <div className="flex gap-6 items-center justify-center text-center">
                     <p className={rowClass}>{collection.id}</p>
                     <p className={rowClass}>{collection.name}</p>
-                    <p className={rowClass}>{collection.description}</p>
+                    <p className={rowClass}>{text.truncateText(collection.description, 55)}</p>
                     <p className={rowClass}>{collection.stocks.toLocaleString()}</p>
                     <p className={rowClass}>${collection.price.toLocaleString()}</p>
                     <div className="flex gap-2 w-11/12 flex-wrap text-sm items-center justify-center">
