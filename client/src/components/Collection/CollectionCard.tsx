@@ -1,8 +1,10 @@
 "use client"
 
 import type { Collection } from '@@types/entities/Collection';
+import type { RootState } from '@@store/index';
 
 import React, { useState } from 'react';
+import { useAppSelector } from '@@hooks';
 import { Card, Button, Modal } from '@@components/Common';
 
 export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
@@ -11,9 +13,22 @@ export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
 
 function CollectionCard({ className, collection }: CollectionCardProps) {
 
+    const auth = useAppSelector((state: RootState) => state.auth);
     const [visible, setVisible] = useState(false);
 
     const rowClass = "w-full text-sm";
+
+    const renderBidButton = () => (
+        <Button outlined className="w-20" size="sm">
+            <p className="font-semibold">Bid</p>
+        </Button>
+    );
+
+    const renderViewAllBidsButton = () => (
+        <Button color="gradient" className="w-28" size="sm">
+            <p className="font-semibold">View All Bids</p>
+        </Button>
+    );
 
     return(
         <React.Fragment>
@@ -25,9 +40,10 @@ function CollectionCard({ className, collection }: CollectionCardProps) {
                     <p className={rowClass}>{collection.stocks.toLocaleString()}</p>
                     <p className={rowClass}>${collection.price.toLocaleString()}</p>
                     <div className="flex  gap-2 w-11/12 text-sm items-center justify-center">
-                        <Button color="gradient" className="w-20" size="sm">
-                            <p className="font-semibold">Bid</p>
-                        </Button>
+                        {
+                            auth.user && auth.user.id === collection.owner.id ? 
+                            renderViewAllBidsButton() : renderBidButton()
+                        }
                         <Button className="w-20" size="sm" onClick={() => setVisible(true)}>
                             <p className="font-semibold">View</p>
                         </Button>
