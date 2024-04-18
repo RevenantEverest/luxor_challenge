@@ -27,13 +27,9 @@ function ToastError({ toast, position="top-right", duration=3000, message }: Toa
 
     return(
         <Card className="bg-card-light p-4 shadow-lg">
-            <div className="flex">
-                <div className="pr-3">
-                    <FaCircleXmark className="text-red-500" />
-                </div>
-                <div>
-                    {renderMessage()}
-                </div>
+            <div className="flex gap-2 w-full items-center">
+                <FaCircleXmark className="text-red-500" />
+                {renderMessage()}
             </div>
         </Card>
     );
