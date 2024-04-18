@@ -5,30 +5,22 @@ import type { RootState } from '@@store/index';
 
 import React, { useState } from 'react';
 import { useAppSelector } from '@@hooks';
-import { Card, Button, Modal } from '@@components/Common';
 
+import { Card, Button, Modal } from '@@components/Common';
+import EditCollection from './EditCollection';
+import BidsList from '@@components/Bids/BidsList';
+import CreateBid from '@@components/Bids/CreateBid';
 export interface CollectionCardProps extends React.HTMLProps<HTMLDivElement> {
-    collection: Collection
+    collection: Collection,
+    fetchCollections: () => void
 };
 
-function CollectionCard({ className, collection }: CollectionCardProps) {
+function CollectionCard({ className, collection, fetchCollections }: CollectionCardProps) {
 
     const auth = useAppSelector((state: RootState) => state.auth);
     const [visible, setVisible] = useState(false);
 
     const rowClass = "w-full text-sm";
-
-    const renderBidButton = () => (
-        <Button outlined className="w-20" size="sm">
-            <p className="font-semibold">Bid</p>
-        </Button>
-    );
-
-    const renderViewAllBidsButton = () => (
-        <Button color="gradient" className="w-28" size="sm">
-            <p className="font-semibold">View All Bids</p>
-        </Button>
-    );
 
     return(
         <React.Fragment>
@@ -39,10 +31,14 @@ function CollectionCard({ className, collection }: CollectionCardProps) {
                     <p className={rowClass}>{collection.description}</p>
                     <p className={rowClass}>{collection.stocks.toLocaleString()}</p>
                     <p className={rowClass}>${collection.price.toLocaleString()}</p>
-                    <div className="flex  gap-2 w-11/12 text-sm items-center justify-center">
+                    <div className="flex gap-2 w-11/12 flex-wrap text-sm items-center justify-center">
                         {
-                            auth.user && auth.user.id === collection.owner.id ? 
-                            renderViewAllBidsButton() : renderBidButton()
+                            auth.user && auth.user.id !== collection.owner.id && 
+                            <CreateBid collection={collection} />
+                        }
+                        {
+                            auth.user && auth.user.id === collection.owner.id && 
+                            <EditCollection className="w-20" collection={collection} fetchCollections={fetchCollections} />
                         }
                         <Button className="w-20" size="sm" onClick={() => setVisible(true)}>
                             <p className="font-semibold">View</p>
@@ -64,6 +60,7 @@ function CollectionCard({ className, collection }: CollectionCardProps) {
                             ${collection.price.toLocaleString()}
                         </p>
                     </div>
+                    <BidsList collection={collection} />
                 </div>
             </Modal>
         </React.Fragment>
