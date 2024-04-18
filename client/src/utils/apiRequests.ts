@@ -8,12 +8,14 @@ import type {
     RequestParams, 
     CommonRequestParams, 
     AxiosPaginatedApiResponse,
-    ApiPaginatedResponse
+    ApiPaginatedResponse,
+    ApiResponse
 } from '@@types/api';
 
 import * as promises from './promises';
 
-export type ApiResponse<T> = AxiosApiResponse<T>;
+export type RequestReturn<T> = HandleAxiosReturn<ApiResponse<T>>;
+export type PaginatedRequestReturn<T> = HandleAxiosReturn<ApiPaginatedResponse<T>>;
 
 export function generateRequest<T>(method: RequestMethods, endpoint: string, data?: T, authToken?: string) {
     const authHeaders = {
@@ -42,7 +44,7 @@ export async function noResponseRequest<T>({ method, endpoint, data }: RequestPa
     return [true, undefined];
 };
 
-export async function paginatedRequest<T>({ method, endpoint }: CommonRequestParams): Promise<HandleAxiosReturn<ApiPaginatedResponse<T>>> {
+export async function paginatedRequest<T>({ method, endpoint }: CommonRequestParams): Promise<PaginatedRequestReturn<T>> {
     const request = generateRequest(method, endpoint);
 
     const [res, err] = await promises.handleApi<AxiosPaginatedApiResponse<T>>(request);
@@ -54,10 +56,10 @@ export async function paginatedRequest<T>({ method, endpoint }: CommonRequestPar
     return [res?.data, undefined];
 };
 
-export async function request<T, D = void>({ method, endpoint, data, authToken }: RequestParams<D>): Promise<HandleAxiosReturn<T>> {
+export async function request<T, D = void>({ method, endpoint, data, authToken }: RequestParams<D>): Promise<RequestReturn<T>> {
     const request = generateRequest(method, endpoint, data, authToken);
 
-    const [res, err] = await promises.handleApi<ApiResponse<T>>(request);
+    const [res, err] = await promises.handleApi<AxiosApiResponse<T>>(request);
 
     if(err) {
         return [undefined, err];

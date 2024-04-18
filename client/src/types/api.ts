@@ -12,7 +12,15 @@ export interface RequestParams<T> extends CommonRequestParams {
     data?: T
 };
 
-export type ApiRequestOptions = Partial<CommonRequestParams>;
+export interface ApiErrorResponse {
+    error: boolean,
+    message: string,
+    issues: unknown
+};
+
+export interface ApiResponse<T> {
+    results: T
+};
 
 export interface ApiPaginatedResponse<T> {
     count: number,
@@ -25,15 +33,6 @@ export interface ApiPaginationParams {
     page?: number
 };
 
-export interface ApiErrorResponse {
-    error: boolean,
-    message: string
-};
-
-export interface ApiResponse<T> {
-    results: T
-};
-
-export type AxiosApiResponse<T> = AxiosResponse<T>;
-export type AxiosApiError = AxiosError<ApiErrorResponse>;
+export type AxiosApiResponse<T> = AxiosResponse<ApiResponse<T>>;
 export type AxiosPaginatedApiResponse<T> = AxiosResponse<ApiPaginatedResponse<T>>;
+export type AxiosApiError = AxiosError<ApiErrorResponse>;
