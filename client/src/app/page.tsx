@@ -48,7 +48,12 @@ function Home() {
             const key = `${collection.id}-${index}`;
             const bgColor = index % 2 === 0 ? "bg-card" : "bg-card-light";
             return(
-                <CollectionCard key={key} className={bgColor} collection={collection} />
+                <CollectionCard 
+                    key={key} 
+                    className={bgColor} 
+                    collection={collection}
+                    fetchCollections={fetchCollections}
+                />
             );
         });
     };
