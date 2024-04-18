@@ -53,7 +53,7 @@ function SingleCollection({ params }: SingleCollectionProps) {
                 <Spinner className="text-center w-full pt-10" size="lg" />
                 :
                 <div className="flex flex-col gap-5 items-center justify-center text-center w-full">
-                    <div className="flex gap-5 items-center justify-center">
+                    <div className="flex flex-col md:flex-row gap-5 items-center justify-center">
                         <h1 className="text-4xl font-semibold">{collection.name}</h1>
                         {
                             auth.user && auth.user.id === collection.owner.id && 
@@ -75,9 +75,9 @@ function SingleCollection({ params }: SingleCollectionProps) {
                             ${collection.price.toLocaleString()}
                         </p>
                     </div>
-                    <div className="flex w-full">
+                    <div className="flex w-full justify-center md:justify-start">
                         <div className="w-1/2">
-                            <Link className="self-start" href="/">
+                            <Link className="self-center md:self-start" href="/">
                                 <Button className="flex w-44 items-center justify-center" size="sm">
                                     <FaArrowLeft className="pr-2 font-semibold text-xl" />
                                     <p className="font-semibold">
