@@ -1,4 +1,4 @@
-import type { ApiPaginatedResponse, ApiRequestOptions, ApiPaginationParams } from '@@types/api';
+import type { ApiPaginatedResponse, ApiPaginationParams } from '@@types/api';
 import type { HandleAxiosReturn } from '@@types/promises';
 import type { Collection } from '@@types/entities/Collection';
 
