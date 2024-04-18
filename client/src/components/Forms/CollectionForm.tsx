@@ -8,20 +8,22 @@ import validator from 'validator';
 
 import { TextInput, TextArea, Button } from '@@components/Common';
 
-export interface CreateCollectionFormValues {
+export interface CollectionFormValues {
     name: string,
     description: string,
     stocks: string,
     price: string
 };
 
-export type CreateCollectionFormHelpers = FormikHelpers<CreateCollectionFormValues>;
+export type CollectionFormHelpers = FormikHelpers<CollectionFormValues>;
 
-export interface CreateCollectionFormProps {
-    onSubmit: (values: CreateCollectionFormValues, helpers: CreateCollectionFormHelpers) => void
+export interface CollectionFormProps {
+    formType: "Create" | "Update",
+    initialValues?: CollectionFormValues,
+    onSubmit: (values: CollectionFormValues, helpers: CollectionFormHelpers) => void
 };
 
-function CreateCollectionForm(props: CreateCollectionFormProps) {
+function CollectionForm(props: CollectionFormProps) {
 
     const {
         handleChange,
@@ -32,13 +34,13 @@ function CreateCollectionForm(props: CreateCollectionFormProps) {
         values,
         errors
     } = useFormik({
-        initialValues: {
+        initialValues: props.initialValues ?? {
             name: "",
             description: "",
             stocks: "",
             price: ""
         },
-        onSubmit: (values: CreateCollectionFormValues, helpers: CreateCollectionFormHelpers) => {
+        onSubmit: (values: CollectionFormValues, helpers: CollectionFormHelpers) => {
             let hasErrors = false;     
             
             if(values.description.length < 10) {
@@ -68,7 +70,7 @@ function CreateCollectionForm(props: CreateCollectionFormProps) {
         <div className="flex w-full">
             <form className="w-full" onSubmit={handleSubmit}>
                 <div className="pb-6">
-                    <h1 className="text-center font-bold text-3xl">Create Collection</h1>
+                    <h1 className="text-center font-bold text-3xl">{props.formType} Collection</h1>
                 </div>
                 <div className="pb-6">
                     <TextInput
@@ -138,7 +140,7 @@ function CreateCollectionForm(props: CreateCollectionFormProps) {
                         loading={isSubmitting}
                         onClick={() => handleSubmit}
                     >
-                        <p className="font-semibold">Create Collection</p>
+                        <p className="font-semibold">{props.formType} Collection</p>
                     </Button>
                 </div>
             </form>
@@ -146,4 +148,4 @@ function CreateCollectionForm(props: CreateCollectionFormProps) {
     );
 };
 
-export default CreateCollectionForm;
+export default CollectionForm;
