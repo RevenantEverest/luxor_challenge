@@ -26,3 +26,13 @@ export function create(data: CollectionCreate, authToken: string): Promise<Handl
         data
     });
 };
+
+export function update(collectionId: string, data: CollectionCreate, authToken: string): Promise<HandleAxiosReturn<ApiResponse<Collection>>> {
+    const endpoint = `${baseEndpoint}/id/${collectionId}`;
+    return apiRequests.request<Collection, CollectionCreate>({
+        endpoint,
+        method: "put",
+        authToken,
+        data
+    });
+};
