@@ -9,3 +9,4 @@ export { default as ToastSuccess } from './Toasts/ToastSuccess';
 export { default as Dropdown } from './Dropdown/Dropdown';
 export { default as DropdownItem } from './Dropdown/DropdownItem';
 export { default as Spinner } from './Spinner';
+export { default as Tooltip } from './Tooltip';
