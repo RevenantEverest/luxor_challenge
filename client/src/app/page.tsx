@@ -1,18 +1,25 @@
 "use client"
 
 import type { Collection } from '@@types/entities/Collection';
+import type { RootState } from '@@store/index';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Card, Layout } from '@@components/Common';
+
+import { useAppSelector } from '@@hooks';
+
+import { Card, Layout, Spinner } from '@@components/Common';
 
 import CollectionListHeaders from '@@components/Collection/CollectionListHeaders';
 import CollectionCard from '@@components/Collection/CollectionCard';
+import CreateCollection from '@@components/Collection/CreateCollection';
 
-import * as api from '../api';
+import * as api from '@@api';
 
 function Home() {
 
-    const [loading, setLoading] = useState(false);
+    const auth = useAppSelector((state: RootState) => state.auth);
+
+    const [loading, setLoading] = useState(true);
     const [collections, setCollections] = useState<Collection[]>([]);
 
     const fetchInitialCollections = useCallback(() => {
@@ -24,7 +31,6 @@ function Home() {
     }, [fetchInitialCollections]);
 
     const fetchCollections = async (page = 1) => {
-        setLoading(true);
         const [res, err] = await api.collectionServices.index({
             page
         });
@@ -48,11 +54,19 @@ function Home() {
     };
 
     return (
-        <Layout className="flex-col gap-10">
+        <Layout className="flex-col gap-5">
             <h1 className="font-semibold text-4xl">Collections</h1>
+            {
+                auth.user &&
+                <CreateCollection className="self-end" fetchCollections={fetchCollections} />
+            }
             <Card className="w-full min-h-[70vh]">
                 <CollectionListHeaders />
-                {loading ? "" : renderCollections()}
+                {
+                    loading ?
+                    <Spinner className="text-center w-full pt-10" size="lg" /> :
+                    renderCollections()
+                }
             </Card>
         </Layout>  
     );
