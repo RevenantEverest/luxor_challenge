@@ -34,6 +34,9 @@ async function index(req: Request, res: Response<"pagination">) {
         },
         relations: {
             owner: true
+        },
+        order: {
+            id: "ASC"
         }
     });
 

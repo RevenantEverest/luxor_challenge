@@ -1,0 +1,18 @@
+{
+    "compilerOptions":{
+        "baseUrl": "./src",
+        "paths": {
+            "@@components/*":["./components/*"],
+            "@@containers/*":["./containers/*"],           
+            "@@navigation/*":["./navigation/*"],
+            "@@pages/*": ["./pages/*"],
+            "@@store/*": ["./store/*"],
+            "@@types/*": ["./types/*"],
+            "@@api": ["./api/index.ts"],
+            "@@constants": ["./constants/index.ts"],
+            "@@hooks":["./hooks/index.ts"],         
+            "@@providers":["./providers/index.tsx"],    
+            "@@utils": ["./utils/index.ts"]
+        }
+    }
+}
