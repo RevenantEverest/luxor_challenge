@@ -12,10 +12,12 @@ import BidForm from '@@components/Forms/BidForm';
 import * as api from '@@api';
 
 export interface CreateBidProps {
-    collection: Collection
+    collection: Collection,
+    className?: string,
+    fetchBids?: (collectionId: string) => void
 };
 
-function CreateBid({ collection }: CreateBidProps) {
+function CreateBid({ className="", collection, fetchBids }: CreateBidProps) {
 
     const auth = useAppSelector((state: RootState) => state.auth);
     const [visible, setVisible] = useState(false);
@@ -40,12 +42,16 @@ function CreateBid({ collection }: CreateBidProps) {
             <ToastSuccess toast={t} message="Bid created successfully!" />
         ));
 
+        if(fetchBids) {
+            fetchBids(collection.id.toString());
+        }
+
         setVisible(false);
     };
 
     return(
         <React.Fragment>
-            <Button color="gradient" className="w-20" size="sm" onClick={() =>  setVisible(true)}>
+            <Button color="gradient" className={`w-20 ${className}`} size="sm" onClick={() =>  setVisible(true)}>
                 <p className="font-semibold">Bid</p>
             </Button>
             <Modal motionKey={`create-bid-modal`} visible={visible} setVisible={setVisible}>
